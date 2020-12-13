@@ -14,7 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome')->with(["globalData" => collect([
+        'user' => Auth::user()
+    ])
+    
+    ]);
 });
 
 Route::get('/admin', 'BackController@index')->name('index');

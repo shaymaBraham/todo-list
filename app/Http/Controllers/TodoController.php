@@ -23,8 +23,7 @@ class TodoController extends Controller
 
     public function list()
     {
-
-        
+       
         $iduser = Auth::id();
 
        

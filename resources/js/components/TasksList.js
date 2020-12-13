@@ -16,6 +16,8 @@
       }
 
       componentDidMount () {
+
+        console.log(JSON.parse(globalData))
         axios.get('/api/tasks').then(response => {
           this.setState({
             tasks: response.data
@@ -23,29 +25,12 @@
         })
       }
       
-      handleShow (descr) {
-        
-           return(
-            <Modal.Dialog>
-            <Modal.Header closeButton>
-              <Modal.Title>Descripiton of task</Modal.Title>
-            </Modal.Header>
-          
-            <Modal.Body>
-              <p>{descr}</p>
-            </Modal.Body>
-          
-            <Modal.Footer>
-              <Button variant="secondary">Close</Button>
-             
-            </Modal.Footer>
-          </Modal.Dialog>
-           );
-        
-     }
+      
 
       render () {
         const { tasks } = this.state
+
+        
         return (
           <div className='container py-4'>
             <div className='row justify-content-center'>
@@ -56,12 +41,17 @@
                    
                     <ul className='list-group list-group-flush'>
                       {tasks.map(task => (
-                        <li onClick={this.handleShow(task.description)}
+
+                     task.id_user==JSON.parse(globalData).user._id ?
+                        <li 
                           className='list-group-item list-group-item-action d-flex justify-content-between align-items-center'
                           key={task._id}
                         >
-                          {task.label}
-                          {task.state== 1 ? 
+                          {task.id_user==JSON.parse(globalData).user._id ? task.label :''}
+                         
+                          {
+                          task.id_user==JSON.parse(globalData).user._id ?
+                          task.state== 1 ? 
                           <span className='badge badge-success badge-pill'>
                            Completed
                           </span>
@@ -69,9 +59,16 @@
                           <span className='badge badge-warning badge-pill'>
                           non Completed
                           </span>
+
+                          :
+                          ''
                          }
                           
                         </li>
+
+                        :
+
+                        ''
                       ))}
                     </ul>
                   </div>

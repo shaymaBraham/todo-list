@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Auth\Authenticatable;
@@ -20,6 +19,8 @@ CanResetPasswordContract
      *
      * @var array
      */
+
+    protected $PrimaryKey='_id';
     protected $fillable = [
         'name', 'email', 'password',
     ];
