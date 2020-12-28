@@ -41,6 +41,10 @@ $app->singleton(
     App\Exceptions\Handler::class
 );
 
+/*$app->register(
+    \KeycloakGuard\KeycloakGuardServiceProvider::class);*/
+
+
 /*
 |--------------------------------------------------------------------------
 | Return The Application

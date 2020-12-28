@@ -14,29 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome')->with(["globalData" => collect([
-        'user' => Auth::user()
-    ])
-    
-    ]);
+    return view('welcome');
 });
 
-Route::get('/admin', 'BackController@index')->name('index');
 
 
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Route::get('/new-todo', 'TodoController@index')->name('add');
-Route::post('store',['as' => 'todo.store', 'uses' => 'TodoController@insert']);
-
-
-Route::get('/edit-todo/{id}', 'TodoController@edit')->name('edit');
-Route::post('update',['as' => 'todo.update', 'uses' => 'TodoController@update']);
-
-
-Route::post('destroy','TodoController@destroy')->name('destroy');
-
-Route::post('markAsCompleted','TodoController@markAsCompleted')->name('markAsCompleted');;
-
+//Auth::routes();

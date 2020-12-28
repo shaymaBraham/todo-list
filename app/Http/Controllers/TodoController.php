@@ -12,29 +12,67 @@ use Session;
 class TodoController extends Controller
 {
     //
+   
+
     public function index()
     {
 
-         $iduser = Auth::id();
-        return view('add_todo',compact('iduser'));
+        echo auth::id();
+        $tasks = todo::all();
 
-       
+        return response()->json([
+            'tasks' => $tasks
+        ]);
     }
 
-    public function list()
+    public function store(Request $request)
     {
-       
-        $iduser = Auth::id();
 
-       
-        $tasks = todo::orderBy('created_at', 'desc')
         
-        ->get();
-      return $tasks->toJson();
+        $task = new Todo;
+        $task->label = $request->title;
+        $task->description = $request->description;
+        $task->state = 0; 
+        //$task->id_user = $request->get('iduser');;        
+      
+        if(!$task->save()){
+            //Task was created show OK message
+            return response()->json([
+                'error' => 'Failed to add task.'
+            ]);
+        }
+
+        //Task was created show OK message
+        return response()->json(array('success' => true, 'task_created' => 1), 200);
 
     }
 
-    public function insert(Request $request)
+
+    public function update(Request $request, $id)
+    {
+        $task = Todo::find($id);
+
+        // Toggle task done and undo.
+        if($task->state === 1){
+            $task->state = 0;
+        }else{
+            $task->state = 1;
+        }
+
+        $task->save();
+    }
+
+    public function destroy($id)
+    {
+        Todo::destroy($id);
+
+        return response()->json([
+            'message' => 'Task has been deleted.'
+        ]);
+    }
+
+   
+   /* public function insert(Request $request)
     {
 
         $this->validate($request, [
@@ -114,5 +152,6 @@ public function markAsCompleted(Request $request)
 
         return redirect('home');
       }
+      */
     
 }

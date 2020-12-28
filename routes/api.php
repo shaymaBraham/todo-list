@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Laravel\Passport\Http\Controllers\AccessTokenController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,10 +15,26 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+//Route::post('login', [AccessTokenController::class, 'issueToken'])->middleware(['api-login', 'throttle']);
 
 
+//Route::middleware('auth:api')->group( function(){
+    Route::get('/tasks/', 'TodoController@index');
 
-Route::get('/tasks', 'TodoController@list');
+    Route::post('/task/add', 'TodoController@store');
+    
+    Route::post('/task/update/{id}', 'TodoController@update');
+    
+    Route::post('/task/delete/{id}', 'TodoController@destroy');
+//});
+
+/*Route::group(['middleware' => ['web']], function () {
+    Route::post('login','Auth\LoginController@login');  
+    Route::post('register','Auth\RegisterController@register');  
+    Route::post('logout','Auth\LoginController@logout');
+    Route::post('password/email','Auth\ForgotPasswordController@sendResetLinkEmail'); 
+    Route::post('password/reset','Auth\ResetPasswordController@reset');
+       
+
+});*/
