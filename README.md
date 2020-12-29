@@ -1,5 +1,8 @@
 Laravel React js Todolist :
 ETAPE1 :
+Installation de laravel et de react js 
+configuration de base de données MongoDB
+Codage:
 -- partie API avec laravel : 
 *les fonctions de creation de tasks , update, delete.
 
